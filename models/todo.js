@@ -11,5 +11,9 @@ const TodoSchema = new Schema({
 
 //create model for todo
 const Todo = mongoose.model('todo', TodoSchema);
+const DoneTodo = mongoose.model('doneTodo', TodoSchema);
 
-module.exports = Todo;
+module.exports = {
+    Todo: mongoose.model('todo', TodoSchema),
+    DoneTodo: mongoose.model('doneTodo', TodoSchema),
+};
