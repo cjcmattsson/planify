@@ -3,7 +3,6 @@ const router = express.Router();
 const {Todo, DoneTodo} = require('../models/todo');
 
 router.get('/todos', (req, res, next) => {
-
   //this will return all the data, exposing only the id and action field to the client
   Todo.find({}, 'action')
     .then(data => res.json(data))
@@ -11,7 +10,6 @@ router.get('/todos', (req, res, next) => {
 });
 
 router.get('/doneTodos', (req, res, next) => {
-  
   //this will return all the data, exposing only the id and action field to the client
   DoneTodo.find({}, 'action')
     .then(data => res.json(data))
@@ -44,6 +42,12 @@ router.post('/doneTodos', (req, res, next) => {
 
 router.delete('/todos/:id', (req, res, next) => {
   Todo.findOneAndDelete({"_id": req.params.id})
+    .then(data => res.json(data))
+    .catch(next)
+})
+
+router.delete('/doneTodos/:id', (req, res, next) => {
+  DoneTodo.findOneAndDelete({"_id": req.params.id})
     .then(data => res.json(data))
     .catch(next)
 })

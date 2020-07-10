@@ -12,43 +12,58 @@ class Todo extends Component {
   }
 
   componentDidMount(){
-    this.getTodos();
+    this.getTodos("todos");
+    this.getTodos("doneTodos");
   }
 
-  getTodos = () => {
-    axios.get('/api/todos')
+  getTodos = (list) => {
+    axios.get(`/api/${list}`)
       .then(res => {
         if(res.data){
           console.log(res);
           this.setState({
-            todos: res.data
+            [list]: res.data
           })
         }
       })
       .catch(err => console.log(err))
   }
 
-  deleteTodo = (todo) => {
-    // this.state.doneTodos = [...this.state.doneTodos, todo];
-    axios.post('/api/doneTodos', todo)
-      .catch(err => console.log(err))
-    axios.delete(`/api/todos/${todo._id}`)
+  deleteTodo = (todo, removePermanent) => {
+    if (!removePermanent) {
+      axios.delete(`/api/todos/${todo._id}`)
       .then(res => {
         if(res.data){
-          this.getTodos()
+          this.getTodos("todos")
         }
       })
       .catch(err => console.log(err))
+      axios.post('/api/doneTodos', todo)
+      .then(res => {
+        if(res.data){
+          this.getTodos("doneTodos")
+        }
+      })
+      .catch(err => console.log(err))
+    } else {
+      axios.delete(`/api/doneTodos/${todo._id}`)
+      .then(res => {
+        if(res.data){
+          this.getTodos("doneTodos")
+        }
+      })
+    }
   }
 
   render() {
-    let { todos } = this.state;
+    let { todos, doneTodos } = this.state;
 
     return(
       <div>
-        <h1>My Todo(s)</h1>
+        <h1>Fixa inför flytt</h1>
         <Input getTodos={this.getTodos}/>
-        <ListTodo todos={todos} deleteTodo={this.deleteTodo}/>
+        <ListTodo todos={todos} deleteTodo={this.deleteTodo} removePermanent={false}/>
+        <ListTodo todos={doneTodos} deleteTodo={this.deleteTodo} removePermanent={true}/>
       </div>
     )
   }
