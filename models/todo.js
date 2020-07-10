@@ -4,8 +4,11 @@ const Schema = mongoose.Schema;
 //create schema for todo
 const TodoSchema = new Schema({
   action: {
-    type: String,
-    required: [true, 'The todo text field is required']
+    todo: {
+      type: String,
+      required: [true, 'The todo text field is required']
+    },
+    subTodos: [String],
   }
 })
 

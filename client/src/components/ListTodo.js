@@ -12,7 +12,13 @@ const ListTodo = ({ todos, deleteTodo, removePermanent }) => {
           (
             todos.map(todo => {
               return (
-                <li key={todo._id} onClick={() => deleteTodo(todo, removePermanent)}>{todo.action.test ? todo.action.test : todo.action}</li>
+                <li key={todo._id} onClick={() => deleteTodo(todo, removePermanent)}>
+                  <span>{todo.action.todo}</span>
+                  <div>
+                    <span className="edit-remove">Ändra</span>
+                    <span className="edit-remove">Färdigställ</span>
+                  </div>
+                </li>
               )
             })
           )

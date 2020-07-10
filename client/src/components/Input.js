@@ -9,9 +9,14 @@ class Input extends Component {
   }
 
   addTodo = () => {
-    const task = {action: this.state.action}
+    const task = {
+      action: {
+        todo: this.state.action,
+        subTodos: ['2',"1"]
+      },
+    }
 
-    if(task.action && task.action.length > 0){
+    if(task.action.todo && task.action.todo.length > 0){
       axios.post('/api/todos', task)
         .then(res => {
           if(res.data){

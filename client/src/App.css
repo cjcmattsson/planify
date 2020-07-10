@@ -15,6 +15,10 @@ button {
   color: var(--inverted-text-color);
 }
 
+.edit-remove {
+  font-size: 16px;
+}
+
 .App {
   text-align: center;
   font-size: calc(10px + 2vmin);
@@ -67,6 +71,9 @@ li {
   border-radius: 5px;
   overflow-wrap: break-word;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @media only screen and (min-width: 300px) {
